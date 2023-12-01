@@ -2,10 +2,10 @@ use super::gcd::gcd;
 
 pub fn lcm(a: u32, b: u32) -> u32 {
     if a == 0 && b == 0 {
-        0
-    } else {
-        a / gcd(a, b) * b
+        return 0;
     }
+
+    a / gcd(a, b) * b
 }
 
 #[cfg(test)]

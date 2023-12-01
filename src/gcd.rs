@@ -1,9 +1,10 @@
 pub fn gcd(a: u32, b: u32) -> u32 {
-    if b == 0 {
-        a
-    } else {
-        gcd(b, a % b)
+    // 割り切れるまで再帰的に呼び出す
+    if b != 0 {
+        return gcd(b, a % b);
     }
+
+    a
 }
 
 #[cfg(test)]
