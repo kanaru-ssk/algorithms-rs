@@ -8,10 +8,7 @@ pub fn gcd(a: u32, b: u32) -> u32 {
 }
 
 pub fn gcd_vec(vec: &Vec<u32>) -> u32 {
-    let mut result = match vec.get(0) {
-        Some(i) => *i,
-        None => 0,
-    };
+    let mut result = 0;
 
     for num in vec {
         result = gcd(result, *num);
