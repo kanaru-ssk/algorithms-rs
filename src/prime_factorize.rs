@@ -35,7 +35,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn return_correct_value() {
+    fn test_prime_factorize() {
         let result = prime_factorize(0);
         assert_eq!(result.len(), 0);
 

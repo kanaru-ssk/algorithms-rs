@@ -28,14 +28,14 @@ mod tests {
     use super::*;
 
     #[test]
-    fn fib1_return_correct_value() {
+    fn test_fib1() {
         assert_eq!(fib1(1), 1);
         assert_eq!(fib1(6), 8);
         assert_eq!(fib1(0), 1);
     }
 
     #[test]
-    fn fib2_return_correct_value() {
+    fn test_fib2() {
         assert_eq!(fib2(1), 1);
         assert_eq!(fib2(6), 8);
         assert_eq!(fib2(0), 0);
