@@ -1,7 +1,7 @@
 pub fn dynamic_programming<T, U>(
-    capacity: usize,
     items: &Vec<U>,
-    calc_cell: fn(items: &Vec<U>, table: &Vec<Vec<T>>, y: usize, x: usize) -> T,
+    capacity: usize,
+    calc_cell: fn(y: usize, x: usize, table: &Vec<Vec<T>>, items: &Vec<U>) -> T,
 ) -> T {
     let table_h = items.len() + 1;
     let table_w = capacity + 1;
@@ -9,9 +9,8 @@ pub fn dynamic_programming<T, U>(
 
     for y in 0..table_h {
         table.push(vec![]);
-
         for x in 0..table_w as usize {
-            let cell = calc_cell(items, &table, y, x);
+            let cell = calc_cell(y, x, &table, items);
             table[y].push(cell);
         }
     }
@@ -25,7 +24,7 @@ mod tests {
 
     #[test]
     fn test_fibonacci() {
-        fn calc_cell(_: &Vec<u32>, table: &Vec<Vec<u32>>, y: usize, x: usize) -> u32 {
+        fn calc_cell(y: usize, x: usize, table: &Vec<Vec<u32>>, _: &Vec<u32>) -> u32 {
             if x <= 0 {
                 0
             } else if x <= 2 {
@@ -34,14 +33,14 @@ mod tests {
                 table[y][x - 1] + table[y][x - 2]
             }
         }
-        assert_eq!(dynamic_programming(6, &Vec::new(), calc_cell), 8);
+        assert_eq!(dynamic_programming(&Vec::new(), 6, calc_cell), 8);
     }
 
     #[test]
     fn test_bin_packing() {
         let capacity = 10;
         let items: Vec<usize> = vec![4, 7, 8, 5, 1];
-        fn calc_cell(items: &Vec<usize>, table: &Vec<Vec<bool>>, y: usize, x: usize) -> bool {
+        fn calc_cell(y: usize, x: usize, table: &Vec<Vec<bool>>, items: &Vec<usize>) -> bool {
             if y == 0 {
                 x == 0
             } else if table[y - 1][x] {
@@ -52,7 +51,7 @@ mod tests {
                 table[y - 1][x - items[y - 1]]
             }
         }
-        assert_eq!(dynamic_programming(capacity, &items, calc_cell), true);
+        assert_eq!(dynamic_programming(&items, capacity, calc_cell), true);
     }
 
     #[test]
@@ -70,7 +69,7 @@ mod tests {
             Item { cost: 1, value: 1 },
         ];
 
-        fn calc_cell(items: &Vec<Item>, table: &Vec<Vec<u32>>, y: usize, x: usize) -> u32 {
+        fn calc_cell(y: usize, x: usize, table: &Vec<Vec<u32>>, items: &Vec<Item>) -> u32 {
             if y == 0 {
                 0
             } else if (x as u32) < items[y - 1].cost {
@@ -82,6 +81,6 @@ mod tests {
                 )
             }
         }
-        assert_eq!(dynamic_programming(capacity, &items, calc_cell), 16);
+        assert_eq!(dynamic_programming(&items, capacity, calc_cell), 16);
     }
 }
