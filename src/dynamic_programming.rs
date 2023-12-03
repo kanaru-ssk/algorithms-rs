@@ -24,7 +24,18 @@ mod tests {
 
     #[test]
     fn test_fibonacci() {
-        fn calc_cell(y: usize, x: usize, table: &Vec<Vec<u32>>, _: &Vec<u32>) -> u32 {
+        let samples = [
+            (0, 0),
+            (1, 1),
+            (2, 1),
+            (3, 2),
+            (4, 3),
+            (5, 5),
+            (6, 8),
+            (20, 6765),
+        ];
+
+        fn fib(y: usize, x: usize, table: &Vec<Vec<u32>>, _: &Vec<u32>) -> u32 {
             if x <= 0 {
                 0
             } else if x <= 2 {
@@ -33,14 +44,18 @@ mod tests {
                 table[y][x - 1] + table[y][x - 2]
             }
         }
-        assert_eq!(dynamic_programming(&Vec::new(), 6, calc_cell), 8);
+
+        for &(input, expected) in &samples {
+            assert_eq!(dynamic_programming(&Vec::new(), input, fib), expected);
+        }
     }
 
     #[test]
     fn test_bin_packing() {
-        let capacity = 10;
         let items: Vec<usize> = vec![4, 7, 8, 5, 1];
-        fn calc_cell(y: usize, x: usize, table: &Vec<Vec<bool>>, items: &Vec<usize>) -> bool {
+        let samples = [((&items, 10), true), ((&items, 22), false)];
+
+        fn bin_packing(y: usize, x: usize, table: &Vec<Vec<bool>>, items: &Vec<usize>) -> bool {
             if y == 0 {
                 x == 0
             } else if table[y - 1][x] {
@@ -51,7 +66,10 @@ mod tests {
                 table[y - 1][x - items[y - 1]]
             }
         }
-        assert_eq!(dynamic_programming(&items, capacity, calc_cell), true);
+
+        for (input, expected) in samples {
+            assert_eq!(dynamic_programming(input.0, input.1, bin_packing), expected);
+        }
     }
 
     #[test]
@@ -60,7 +78,6 @@ mod tests {
             cost: u32,
             value: u32,
         }
-        let capacity = 10;
         let items = vec![
             Item { cost: 3, value: 4 },
             Item { cost: 4, value: 7 },
@@ -68,8 +85,9 @@ mod tests {
             Item { cost: 4, value: 5 },
             Item { cost: 1, value: 1 },
         ];
+        let samples = [((&items, 10), 16), ((&items, 22), 21)];
 
-        fn calc_cell(y: usize, x: usize, table: &Vec<Vec<u32>>, items: &Vec<Item>) -> u32 {
+        fn knapsack(y: usize, x: usize, table: &Vec<Vec<u32>>, items: &Vec<Item>) -> u32 {
             if y == 0 {
                 0
             } else if (x as u32) < items[y - 1].cost {
@@ -81,6 +99,9 @@ mod tests {
                 )
             }
         }
-        assert_eq!(dynamic_programming(&items, capacity, calc_cell), 16);
+
+        for ((items, capacity), expected) in samples {
+            assert_eq!(dynamic_programming(items, capacity, knapsack), expected);
+        }
     }
 }

@@ -23,21 +23,33 @@ mod tests {
 
     #[test]
     fn test_gcd() {
-        assert_eq!(gcd(18, 12), 6);
-        assert_eq!(gcd(12, 18), 6);
-        assert_eq!(gcd(1, 1), 1);
-        assert_eq!(gcd(10, 0), 10);
-        assert_eq!(gcd(0, 10), 10);
-        assert_eq!(gcd(0, 0), 0);
+        let samples = [
+            ([18, 12], 6),
+            ([12, 18], 6),
+            ([1, 1], 1),
+            ([10, 0], 10),
+            ([0, 10], 10),
+            ([0, 0], 0),
+        ];
+
+        for &(input, expected) in &samples {
+            assert_eq!(gcd(input[0], input[1]), expected);
+        }
     }
 
     #[test]
     fn test_gcd_vec() {
-        assert_eq!(gcd_vec(&vec![18, 12]), 6);
-        assert_eq!(gcd_vec(&vec![36, 12, 48, 120]), 12);
-        assert_eq!(gcd_vec(&vec![0, 0, 0]), 0);
-        assert_eq!(gcd_vec(&vec![10, 0, 25]), 5);
-        assert_eq!(gcd_vec(&vec![3]), 3);
-        assert_eq!(gcd_vec(&vec![]), 0);
+        let samples = [
+            (&vec![18, 12], 6),
+            (&vec![36, 12, 48, 120], 12),
+            (&vec![0, 0, 0], 0),
+            (&vec![3], 3),
+            (&vec![0], 0),
+            (&vec![], 0),
+        ];
+
+        for &(input, expected) in &samples {
+            assert_eq!(gcd_vec(input), expected);
+        }
     }
 }

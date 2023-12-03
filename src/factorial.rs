@@ -13,9 +13,18 @@ mod tests {
 
     #[test]
     fn test_factorial() {
-        assert_eq!(factorial(0), 1);
-        assert_eq!(factorial(1), 1);
-        assert_eq!(factorial(3), 6);
-        assert_eq!(factorial(10), 3628800);
+        let samples = [
+            (0, 1),
+            (1, 1),
+            (2, 2),
+            (3, 6),
+            (4, 24),
+            (5, 120),
+            (10, 3628800),
+        ];
+
+        for &(input, expected) in &samples {
+            assert_eq!(factorial(input), expected);
+        }
     }
 }

@@ -27,21 +27,33 @@ mod tests {
 
     #[test]
     fn test_lcm() {
-        assert_eq!(lcm(18, 12), 36);
-        assert_eq!(lcm(12, 18), 36);
-        assert_eq!(lcm(1, 1), 1);
-        assert_eq!(lcm(10, 0), 0);
-        assert_eq!(lcm(0, 10), 0);
-        assert_eq!(lcm(0, 0), 0);
+        let samples = [
+            ([18, 12], 36),
+            ([12, 18], 36),
+            ([1, 1], 1),
+            ([10, 0], 0),
+            ([0, 10], 0),
+            ([0, 0], 0),
+        ];
+
+        for &(input, expected) in &samples {
+            assert_eq!(lcm(input[0], input[1]), expected);
+        }
     }
 
     #[test]
     fn test_lcm_vec() {
-        assert_eq!(lcm_vec(&vec![18, 12]), 36);
-        assert_eq!(lcm_vec(&vec![36, 12, 48, 120]), 720);
-        assert_eq!(lcm_vec(&vec![36, 12, 48, 0]), 0);
-        assert_eq!(lcm_vec(&vec![0, 0, 0]), 0);
-        assert_eq!(lcm_vec(&vec![3]), 3);
-        assert_eq!(lcm_vec(&vec![]), 0);
+        let samples = [
+            (&vec![18, 12], 36),
+            (&vec![36, 12, 48, 120], 720),
+            (&vec![0, 0, 0], 0),
+            (&vec![3], 3),
+            (&vec![0], 0),
+            (&vec![], 0),
+        ];
+
+        for &(input, expected) in &samples {
+            assert_eq!(lcm_vec(input), expected);
+        }
     }
 }

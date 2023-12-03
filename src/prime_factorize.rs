@@ -36,29 +36,17 @@ mod tests {
 
     #[test]
     fn test_prime_factorize() {
-        let result = prime_factorize(0);
-        assert_eq!(result.len(), 0);
+        let samples = [
+            (0, HashMap::from([])),
+            (1, HashMap::from([])),
+            (2, HashMap::from([(2, 1)])),
+            (12, HashMap::from([(2, 2), (3, 1)])),
+            (53, HashMap::from([(53, 1)])),
+            (4876, HashMap::from([(2, 2), (23, 1), (53, 1)])),
+        ];
 
-        let result = prime_factorize(1);
-        assert_eq!(result.len(), 0);
-
-        let result = prime_factorize(2);
-        assert_eq!(result.len(), 1);
-        assert_eq!(result.get(&2), Some(&1));
-
-        let result = prime_factorize(12);
-        assert_eq!(result.len(), 2);
-        assert_eq!(result.get(&2), Some(&2));
-        assert_eq!(result.get(&3), Some(&1));
-
-        let result = prime_factorize(53);
-        assert_eq!(result.len(), 1);
-        assert_eq!(result.get(&53), Some(&1));
-
-        let result = prime_factorize(4876);
-        assert_eq!(result.len(), 3);
-        assert_eq!(result.get(&2), Some(&2));
-        assert_eq!(result.get(&23), Some(&1));
-        assert_eq!(result.get(&53), Some(&1));
+        for (input, expected) in samples {
+            assert_eq!(prime_factorize(input), expected);
+        }
     }
 }
