@@ -5,13 +5,12 @@ pub fn dynamic_programming<T, U>(
 ) -> T {
     let table_h = items.len() + 1;
     let table_w = capacity + 1;
-    let mut table: Vec<Vec<T>> = Vec::new();
+    let mut table: Vec<Vec<T>> = vec![];
 
     for y in 0..table_h {
+        table.push(vec![]);
+
         for x in 0..table_w as usize {
-            if x == 0 {
-                table.push(vec![]);
-            }
             let cell = calc_cell(items, &table, y, x);
             table[y].push(cell);
         }
@@ -74,7 +73,7 @@ mod tests {
         fn calc_cell(items: &Vec<Item>, table: &Vec<Vec<u32>>, y: usize, x: usize) -> u32 {
             if y == 0 {
                 0
-            } else if items[y - 1].cost > x as u32 {
+            } else if (x as u32) < items[y - 1].cost {
                 table[y - 1][x]
             } else {
                 std::cmp::max(
