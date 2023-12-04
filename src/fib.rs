@@ -1,5 +1,3 @@
-use super::dynamic_programming::dynamic_programming;
-
 pub fn fib1(n: u32) -> u32 {
     if n == 0 {
         0
@@ -10,18 +8,20 @@ pub fn fib1(n: u32) -> u32 {
     }
 }
 
-pub fn fib2(n: usize) -> u32 {
-    fn calc_cell(y: usize, x: usize, table: &Vec<Vec<u32>>, _: &Vec<u32>) -> u32 {
-        if x <= 0 {
-            0
-        } else if x <= 2 {
-            1
-        } else {
-            table[y][x - 1] + table[y][x - 2]
-        }
+pub fn fib2(n: usize) -> usize {
+    if n <= 1 {
+        return n;
+    }
+    let mut a: Vec<usize> = vec![0; n];
+
+    a[0] = 1;
+    a[1] = 1;
+
+    for i in 2..n {
+        a[i] = a[i - 1] + a[i - 2];
     }
 
-    dynamic_programming(&Vec::new(), n, calc_cell)
+    a[n - 1]
 }
 
 #[cfg(test)]
